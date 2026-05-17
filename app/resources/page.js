@@ -106,7 +106,7 @@ export default function ResourcesPage() {
                 { icon:'📝', title:'ISC2 Practice Quiz (10 Qs)', url:'https://www.isc2.org/certifications/cc/cc-practice-quiz', desc:'Official sample questions from ISC2.' },
                 { icon:'📚', title:'GitHub: ISC2-CC-Study-Material', url:'https://github.com/cyberfascinate/ISC2-CC-Study-Material', desc:'Community study notes and summaries.' },
                 { icon:'🎓', title:'Coursera — ISC2 CC Practice Exam', url:'https://www.coursera.org', desc:'30-question and 100-question practice exams with explanations.' },
-                { icon:'📖', title:'Mike Chapple — CC Study Guide', url:'https://www.wiley.com', desc:'Official Wiley textbook. Comprehensive domain coverage with practice questions.' },
+                { icon:'📖', title:'Mike Chapple — CC Study Guide', url:'https://www.wiley.com/en-us/ISC2+Certified+in+Cybersecurity+Study+Guide-p-9781394182794', desc:'Official Wiley textbook. Comprehensive domain coverage with practice questions.' },
               ].map(r => (
                 <a key={r.title} href={r.url} target="_blank" rel="noopener noreferrer" className="card" style={{ textDecoration:'none', display:'block' }}>
                   <div style={{ fontSize:'1.5rem', marginBottom:'0.5rem' }}>{r.icon}</div>
