@@ -230,7 +230,7 @@ const quizzes = {
     ]
   },
   'practice-exam': {
-    title: 'Full Practice Exam — 50 Questions',
+    title: 'Full Practice Exam — 100 Questions',
     domain: 0,
     questions: [
       { q:'Which CIA element ensures data is accessible to authorized users?', opts:['Confidentiality','Integrity','Availability','Non-repudiation'], answer:2, exp:'Availability = systems accessible when authorized users need them.' },
