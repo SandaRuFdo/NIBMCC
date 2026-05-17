@@ -105,7 +105,7 @@ export default function ResourcesPage() {
                 { icon:'🆓', title:'Free CC Training + Exam Voucher', url:'https://www.isc2.org/candidate', desc:'ISC2 offers free self-paced CC training and exam vouchers through their 1M+ initiative.' },
                 { icon:'📝', title:'ISC2 Practice Quiz (10 Qs)', url:'https://www.isc2.org/certifications/cc/cc-practice-quiz', desc:'Official sample questions from ISC2.' },
                 { icon:'📚', title:'GitHub: ISC2-CC-Study-Material', url:'https://github.com/cyberfascinate/ISC2-CC-Study-Material', desc:'Community study notes and summaries.' },
-                { icon:'🎓', title:'Coursera — ISC2 CC Practice Exam', url:'https://www.coursera.org', desc:'30-question and 100-question practice exams with explanations.' },
+                { icon:'🎓', title:'Coursera — ISC2 CC Course', url:'https://www.coursera.org/learn/isc2-certified-in-cybersecurity', desc:'Official ISC2 CC course on Coursera — free to audit, includes practice questions.' },
                 { icon:'📖', title:'Mike Chapple — CC Study Guide', url:'https://www.wiley.com/en-us/ISC2+Certified+in+Cybersecurity+Study+Guide-p-9781394182794', desc:'Official Wiley textbook. Comprehensive domain coverage with practice questions.' },
               ].map(r => (
                 <a key={r.title} href={r.url} target="_blank" rel="noopener noreferrer" className="card" style={{ textDecoration:'none', display:'block' }}>
