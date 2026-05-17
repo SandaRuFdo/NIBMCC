@@ -3,12 +3,12 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 const quizList = [
-  { key:'module-1', title:'Module 1 Quiz', subtitle:'Security Principles', domain:1, questions:20, weight:'26%' },
-  { key:'module-2', title:'Module 2 Quiz', subtitle:'BC / DR / IR', domain:2, questions:10, weight:'10%' },
-  { key:'module-3', title:'Module 3 Quiz', subtitle:'Access Controls', domain:3, questions:15, weight:'22%' },
+  { key:'module-1', title:'Module 1 Quiz', subtitle:'Security Principles', domain:1, questions:34, weight:'26%' },
+  { key:'module-2', title:'Module 2 Quiz', subtitle:'BC / DR / IR', domain:2, questions:19, weight:'10%' },
+  { key:'module-3', title:'Module 3 Quiz', subtitle:'Access Controls', domain:3, questions:24, weight:'22%' },
   { key:'module-4', title:'Module 4 Quiz', subtitle:'Network Security', domain:4, questions:15, weight:'24%' },
   { key:'module-5', title:'Module 5 Quiz', subtitle:'Security Operations', domain:5, questions:10, weight:'18%' },
-  { key:'practice-exam', title:'Full Practice Exam', subtitle:'All 5 Domains', domain:0, questions:50, weight:'100%' },
+  { key:'practice-exam', title:'Full Practice Exam', subtitle:'All 5 Domains', domain:0, questions:51, weight:'100%' },
 ];
 const colors = { 1:'var(--d1)', 2:'var(--d2)', 3:'var(--d3)', 4:'var(--d4)', 5:'var(--d5)', 0:'var(--accent)' };
 
