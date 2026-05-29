@@ -564,121 +564,129 @@ export const dayContent = {
     ]
   },
   11: {
-    title: 'TCP/IP, Wireshark & OSI Deep Dive',
+    title: 'Network Protocols, Services & Boundary Defenses',
     module: 4, domain: 4, hours: 3,
-    intro: 'Day 11 goes deep on the OSI model — every layer, every attack, every protocol. Then TCP vs UDP, the 3-way handshake, and a live Wireshark demo. The most technical day of the course.',
+    intro: 'Day 11 & 12 Combined Masterclass due to class cancellation from rain. This combined session covers the full theoretical syllabus of Network Security including the OSI Deep Dive, Encapsulation, TCP vs UDP Headers, 3-way Handshakes, IP addressing, Topologies, Ports, Firewalls, and IDS vs IPS.',
     sections: [
       {
-        hour: 1, label: 'OSI Full Breakdown',
+        hour: 1, label: 'OSI Stack & Encapsulation',
         content: [
-          { type: 'h3', text: 'OSI Model — All 7 Layers with Attacks' },
-          { type: 'table', headers: ['Layer', 'Name', 'Protocols', 'Devices', 'Attacks'], rows: [
-            ['7','Application','HTTP, HTTPS, DNS, FTP, SMTP, SSH','—','Phishing, SQL injection, XSS, DNS poisoning'],
-            ['6','Presentation','SSL/TLS, JPEG, MPEG','—','SSL stripping, cipher downgrade attacks'],
-            ['5','Session','NetBIOS, PPTP, SIP','—','Session hijacking, replay attacks'],
-            ['4','Transport','TCP, UDP','Stateful firewall','SYN flood, port scanning'],
-            ['3','Network','IP, ICMP, ARP','Router, L3 switch','IP spoofing, DDoS, BGP hijacking'],
-            ['2','Data Link','Ethernet, Wi-Fi, ARP','Switch, bridge','ARP poisoning, MAC spoofing, VLAN hopping'],
-            ['1','Physical','Fiber, coaxial, DSL','Hub, repeater, NIC','Cable tapping, jamming'],
+          { type: 'h3', text: 'OSI Model — All 7 Layers Explained Again' },
+          { type: 'p', text: 'The OSI model is a 7-layer theoretical framework explaining how network communications occur. A security professional must understand how protocols and controls align with each layer.' },
+          { type: 'table', headers: ['Layer', 'Name', 'Key Function', 'Common Protocols', 'Typical Devices'], rows: [
+            ['7', 'Application', 'User-to-network interface', 'HTTP, HTTPS, DNS, SMTP, FTP, SSH, DHCP', 'Gateway, Proxy'],
+            ['6', 'Presentation', 'Encryption, translation, syntax', 'SSL/TLS, JPEG, MPEG, ASCII', '—'],
+            ['5', 'Session', 'Manages and coordinates connections', 'NetBIOS, RPC, SOCKS', '—'],
+            ['4', 'Transport', 'End-to-end reliability, flow control', 'TCP, UDP', 'Stateful Firewall'],
+            ['3', 'Network', 'Logical addressing and routing', 'IP, ICMP, ARP, IPSec', 'Router, L3 Switch'],
+            ['2', 'Data Link', 'Physical addressing, local frames', 'Ethernet, Wi-Fi (802.11), PPP', 'Switch, Bridge'],
+            ['1', 'Physical', 'Raw bit transmission over media', 'Copper, Fiber, RF Signals, RJ45', 'Hub, Repeater, NIC']
           ]},
-          { type: 'tip', text: 'Hub = Layer 1. Switch = Layer 2 (MAC). Router = Layer 3 (IP). Stateful firewall = Layer 4. Proxy firewall = Layer 7.' },
-        ]
-      },
-      {
-        hour: 2, label: 'TCP vs UDP',
-        content: [
-          { type: 'h3', text: 'TCP — Reliable, Ordered, Connected' },
-          { type: 'table', headers: ['Feature','TCP','UDP'], rows: [
-            ['Reliability','Guaranteed delivery + acknowledgments','No guarantee — fire and forget'],
-            ['Connection','Connection-oriented (handshake first)','Connectionless'],
-            ['Order','Maintains packet order','No ordering'],
-            ['Speed','Slower (overhead)','Faster (minimal overhead)'],
-            ['Use cases','HTTP/S, SSH, email, file transfer','DNS, VoIP, video streaming, gaming'],
-          ]},
-          { type: 'h3', text: 'TCP 3-Way Handshake' },
+          { type: 'h3', text: 'Data Encapsulation & Decapsulation Lifecycle' },
+          { type: 'p', text: 'Encapsulation is the process of adding headers (and trailers at Layer 2) to data as it moves down the stack from Layer 7 to Layer 1. Decapsulation is the reverse process, where a receiving device reads and strips off the headers as it processes data up the stack from Layer 1 to Layer 7.' },
           { type: 'ul', items: [
-            'Step 1 — SYN: Client → Server ("I want to connect")',
-            'Step 2 — SYN-ACK: Server → Client ("OK, I acknowledge, are you ready?")',
-            'Step 3 — ACK: Client → Server ("Yes, connection established")',
+            'Data (Layers 7, 6, 5) ➔ The raw message payload formatted and encrypted.',
+            'Segment (Layer 4) ➔ Adds source and destination ports, sequence numbers (for TCP).',
+            'Packet (Layer 3) ➔ Adds source and destination logical IP addresses.',
+            'Frame (Layer 2) ➔ Adds physical source/destination MAC addresses and error-checking trailer.',
+            'Bits (Layer 1) ➔ Converts the frame into electrical currents, light pulses, or radio signals.'
           ]},
-          { type: 'analogy', text: 'Phone call: You dial (SYN). They answer "Hello?" (SYN-ACK). You say "Hi, it\'s me" (ACK). Connection established — conversation begins.' },
-          { type: 'tip', text: 'SYN flood attack: Attacker sends thousands of SYN packets but never completes the handshake. Server resources exhausted waiting for ACKs. This is a DoS attack at Layer 4.' },
+          { type: 'analogy', text: 'Mailing a letter: Writing the letter (Data) ➔ Putting it in an envelope with a note page number (Segment) ➔ Writing the street address (Packet) ➔ Sorting facility adding a route barcode sticker (Frame) ➔ Moving it down the physical roads/airplanes (Bits).' },
+          { type: 'h3', text: 'Attacks Matched to the OSI Layers' },
+          { type: 'ul', items: [
+            'Layer 7 (Application): Phishing, SQL Injection, Cross-Site Scripting (XSS), DNS poisoning.',
+            'Layer 6 (Presentation): SSL stripping, downgrade cipher attacks.',
+            'Layer 5 (Session): Session hijacking, authentication replay attacks.',
+            'Layer 4 (Transport): SYN flood connection depletion, port scanning.',
+            'Layer 3 (Network): IP address spoofing, ICMP ping flood, Smurf attack.',
+            'Layer 2 (Data Link): ARP poisoning, MAC flooding (CAM table depletion).',
+            'Layer 1 (Physical): Cable cutting, physical signal wiretapping, RF wireless jamming.'
+          ]},
+          { type: 'tip', text: 'The exam frequently asks about security controls at specific layers. For example: WAF works at Layer 7. Routers work at Layer 3. Switches work at Layer 2. Hubs work at Layer 1.' }
         ]
       },
       {
-        hour: 3, label: 'Wireshark Demo',
+        hour: 2, label: 'TCP/UDP, Handshakes & Addressing',
         content: [
-          { type: 'h3', text: 'Reading Packet Captures' },
-          { type: 'p', text: 'Wireshark captures raw network traffic. Each row is one packet. You can filter by protocol, IP, port, or content.' },
-          { type: 'table', headers: ['Wireshark Filter','Shows'], rows: [
-            ['http','All HTTP traffic (Layer 7)'],
-            ['tcp.port == 443','All HTTPS traffic (Layer 4 filter)'],
-            ['ip.addr == 192.168.1.1','All traffic to/from a specific IP'],
-            ['tcp.flags.syn == 1','TCP SYN packets (spot handshakes or SYN floods)'],
-            ['dns','All DNS queries and responses'],
+          { type: 'h3', text: 'TCP vs UDP Deep Comparison' },
+          { type: 'p', text: 'Layer 4 Transport protocols define how segments are delivered. TCP is connection-oriented, offering guaranteed delivery, error checking, and packet ordering. UDP is connectionless, offering fast, best-effort delivery with zero state overhead.' },
+          { type: 'table', headers: ['Feature', 'TCP (Transmission Control Protocol)', 'UDP (User Datagram Protocol)'], rows: [
+            ['Connection', 'Connection-oriented (needs 3-way handshake)', 'Connectionless'],
+            ['Reliability', 'Guaranteed delivery via acknowledgments (ACK)', 'Best-effort delivery (fire-and-forget)'],
+            ['Ordering', 'Yes (numbers packets to reassemble in order)', 'No (packets may arrive out of order)'],
+            ['Header Size', 'Min 20 bytes (contains ports, sequence numbers, flags)', 'Fixed 8 bytes (ports, length, checksum)'],
+            ['Speed', 'Slower (latencies from handshakes & retransmissions)', 'Ultra-fast (minimal latency)'],
+            ['Use Cases', 'HTTP/HTTPS, SSH, FTP, SMTP, IMAP', 'VoIP, streaming, gaming, DNS queries, DHCP']
           ]},
-          { type: 'tip', text: 'Wireshark is passive — it captures but does not inject or block. It is a Detective tool. For active blocking, use IPS or a firewall.' },
+          { type: 'h3', text: 'The TCP 3-Way Handshake & SYN Flood' },
+          { type: 'p', text: 'To establish a reliable TCP session, devices execute a 3-step handshake:' },
+          { type: 'ul', items: [
+            'SYN (Synchronize) ➔ Client sends a packet with an Initial Sequence Number (ISN) to request a session.',
+            'SYN-ACK (Synchronize-Acknowledge) ➔ Server receives the SYN, allocates connection memory, and replies with its own ISN and an acknowledgment.',
+            'ACK (Acknowledge) ➔ Client sends the final acknowledgment to establish the session.'
+          ]},
+          { type: 'tip', text: 'SYN Flood: A DoS attack where the attacker sends thousands of SYN packets from spoofed IPs. The server sends SYN-ACKs and waits, filling its connection backlog queue (half-open states) and exhausting memory. Mitigated by SYN cookies and rate limiting.' },
+          { type: 'h3', text: 'IP Addressing: Logical (L3) vs Physical (L2)' },
+          { type: 'ul', items: [
+            'MAC Address (Data Link) ➔ 48-bit hex address burned into the network card. Permanent and unique to the local network segment.',
+            'IP Address (Network) ➔ Logical address assigned dynamically. Routable globally across subnets.',
+            'IPv4 ➔ 32-bit dotted-decimal address (e.g., 192.168.1.1). Total capacity of 4.3 billion.',
+            'IPv6 ➔ 128-bit hexadecimal address (e.g., 2001:0db8::7334). Built-in IPsec and address abundance.',
+            'RFC 1918 Private Ranges ➔ Not routable on public internet: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.'
+          ]},
+          { type: 'h3', text: 'Network Address Translation (NAT) & PAT' },
+          { type: 'p', text: 'NAT translates private IP addresses to public IPs for internet routing. Static NAT maps one-to-one; Dynamic NAT maps internal IPs to a pool of public IPs; PAT (Port Address Translation) maps thousands of internal private IPs to a single public IP by modifying port numbers.' }
         ]
       },
+      {
+        hour: 3, label: 'Media, Devices, Ports & Firewalls',
+        content: [
+          { type: 'h3', text: 'Physical Transmission Media & Topologies' },
+          { type: 'ul', items: [
+            'Twisted Pair (Copper) ➔ UTP (unshielded, vulnerable to EMI) vs STP (shielded with foil). Cat6a supports 10 Gbps up to 100m.',
+            'Fiber Optic ➔ Single-Mode (laser source, narrow core, long-distance SMF) vs Multi-Mode (LED source, wider core, short-distance MMF). Immune to EMI and secure.',
+            'Network Topologies ➔ Bus (single cable, dead link breaks all), Ring (token loop), Star (central switch, resilient), Mesh (fully redundant, highly reliable, expensive).'
+          ]},
+          { type: 'h3', text: 'Critical Port Numbers & replacements' },
+          { type: 'table', headers: ['Insecure Protocol', 'Port', 'Secure Replacement', 'Port', 'Key Feature Added'], rows: [
+            ['Telnet (Remote terminal)', '23', 'SSH (Secure Shell)', '22', 'Cryptography & encapsulation'],
+            ['HTTP (Web access)', '80', 'HTTPS (HTTP Secure)', '443', 'TLS encryption wrapper'],
+            ['FTP (File transfer)', '20/21', 'SFTP / FTPS', '22 / 990', 'Encrypted file transfer channel'],
+            ['LDAP (Directory query)', '389', 'LDAPS (Secure LDAP)', '636', 'Encrypted directory queries'],
+            ['POP3 (Mail download)', '110', 'POP3S', '995', 'TLS encrypted download'],
+            ['IMAP (Mail sync)', '143', 'IMAPS', '993', 'TLS encrypted sync'],
+            ['SMTP (Mail transfer)', '25', 'SMTP over TLS', '587/465', 'Encrypted relay']
+          ]},
+          { type: 'h3', text: 'Network Boundary Devices & Firewalls' },
+          { type: 'ul', items: [
+            'Hub (Layer 1) ➔ Legacy repeater. Replicates bits to all ports. Shared collision domain.',
+            'Switch (Layer 2) ➔ Filters frames based on MAC tables. Microsegmentation creates separate collision domains.',
+            'Router (Layer 3) ➔ Routes packets based on IP routing tables. Separates broadcast domains.',
+            'Packet-Filtering Firewall ➔ Stateless, fast, checks headers (IPs, Ports) only.',
+            'Stateful Inspection Firewall ➔ Tracks active TCP session tables to verify packet flows.',
+            'Proxy / Application Firewall ➔ Intermediary connections; terminates client requests and reconstructs them, inspecting payloads.',
+            'Next-Gen Firewall (NGFW) ➔ Deep packet inspection (DPI), application awareness, and active IPS integration.'
+          ]},
+          { type: 'h3', text: 'IDS vs IPS Security Monitors' },
+          { type: 'p', text: 'IDS (Intrusion Detection) detects and alerts passively (out-of-band SPAN port). IPS (Intrusion Prevention) sits inline (in-band) to actively block traffic. Signature-based matches known patterns; Anomaly-based detects baseline deviations.' }
+        ]
+      }
     ]
   },
   12: {
-    title: 'Ports, Protocols, Firewalls & IDS/IPS',
+    title: 'Ports, Protocols, Firewalls & IDS/IPS (Combined)',
     module: 4, domain: 4, hours: 3,
-    intro: 'Ports are pure memorisation — we make it systematic. Then understand exactly how firewalls filter traffic and how IDS/IPS detect and stop threats. Domain 4\'s most testable content.',
+    intro: 'This session has been combined with Day 11 due to class cancellation from rain. Please refer to the Day 11 page for the complete Network Security masterclass.',
     sections: [
       {
-        hour: 1, label: 'Critical Ports',
+        hour: 1, label: 'Combined Session Notice',
         content: [
-          { type: 'h3', text: 'Must-Know Ports for the Exam' },
-          { type: 'table', headers: ['Port','Protocol','Service','Secure?','Replacement'], rows: [
-            ['20/21','TCP','FTP','❌','Use SFTP (port 22) or FTPS'],
-            ['22','TCP','SSH / SFTP / SCP','✅','Replaces Telnet, FTP'],
-            ['23','TCP','Telnet','❌ Never','SSH (22)'],
-            ['25','TCP','SMTP (send email)','❌','SMTP+TLS port 587'],
-            ['53','TCP/UDP','DNS','❌','DNS over HTTPS (DoH) port 443'],
-            ['67/68','UDP','DHCP','❌','—'],
-            ['80','TCP','HTTP','❌','HTTPS (443)'],
-            ['110','TCP','POP3','❌','IMAPS (993)'],
-            ['143','TCP','IMAP','❌','IMAPS (993)'],
-            ['443','TCP','HTTPS','✅','—'],
-            ['3389','TCP','RDP','⚠️','Use VPN + MFA'],
-          ]},
-          { type: 'tip', text: 'Memory trick: SSH=22, Telnet=23, SMTP=25, DNS=53, HTTP=80, HTTPS=443. If it\'s insecure, the secure version is almost always port 22 (SSH) or adds TLS.' },
+          { type: 'h3', text: 'Merged with Day 11 Masterclass' },
+          { type: 'p', text: 'Last week\'s session was cancelled due to rain. To ensure full curriculum coverage, Day 12 content has been merged into Day 11.' },
+          { type: 'p', text: 'All port numbers, secure protocol replacements, firewall types, and IDS/IPS theories are fully detailed on the Day 11 page.' },
+          { type: 'tip', text: 'Use the navigation controls at the bottom of the page or the curriculum tab to open the combined Day 11 Masterclass.' }
         ]
-      },
-      {
-        hour: 2, label: 'Firewall Types',
-        content: [
-          { type: 'table', headers: ['Firewall Type','What It Inspects','Intelligence','OSI Layer'], rows: [
-            ['Packet-filtering','Source/dest IP + port only','Lowest — stateless, no context','Layer 3-4'],
-            ['Stateful inspection','Full TCP session state','Medium — tracks connections','Layer 4'],
-            ['Proxy / Application','Full application content','High — understands HTTP, FTP etc','Layer 7'],
-            ['NGFW (Next-Gen)','All layers + user identity + application','Highest — DPI, malware scanning','All layers'],
-          ]},
-          { type: 'analogy', text: 'Packet-filter = security guard who checks your badge number. Stateful = guard who tracks your whole visit. Proxy = guard who reads your letter before passing it. NGFW = guard who knows who you are, where you\'ve been, and analyses your body language.' },
-          { type: 'tip', text: 'Stateful firewalls remember the connection state — they know a packet is part of an established session vs a new unsolicited connection. Packet-filtering firewalls cannot tell the difference.' },
-        ]
-      },
-      {
-        hour: 3, label: 'IDS vs IPS',
-        content: [
-          { type: 'table', headers: ['','IDS','IPS'], rows: [
-            ['Full name','Intrusion Detection System','Intrusion Prevention System'],
-            ['Action','Detect + Alert only','Detect + Block traffic'],
-            ['Position','Passive (gets a copy of traffic)','Inline (sits in traffic path)'],
-            ['False positive impact','Just a noisy alert','Blocks legitimate traffic — business impact'],
-            ['Analogy','Security camera','Security guard with authority to stop people'],
-          ]},
-          { type: 'h3', text: 'Detection Methods' },
-          { type: 'table', headers: ['Method','How It Works','Strength','Weakness'], rows: [
-            ['Signature-based','Compares traffic to known attack patterns','Very accurate for known attacks','Cannot detect new (zero-day) attacks'],
-            ['Anomaly-based','Detects deviations from normal baseline','Can detect novel attacks','High false positive rate'],
-            ['Heuristic','Rules-based pattern analysis','Balance of both','Requires tuning'],
-          ]},
-          { type: 'tip', text: 'Zero-day attacks bypass signature-based detection because no signature exists yet. Anomaly-based detection is the only approach that can catch truly new attacks.' },
-        ]
-      },
+      }
     ]
   },
   13: {
